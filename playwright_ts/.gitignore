@@ -1,0 +1,10 @@
+node_modules
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+credentials.js
+.DS_Store
+allure-results
+test-results
+playwright-report

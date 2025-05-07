@@ -1,0 +1,23 @@
+{
+  "name": "playwright_ts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:ui": "npx playwright test --ui",
+    "allure": "npx allure generate ./allure-results --clean && npx allure open"
+  },
+  "author": "eyupUK",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.15.11",
+    "@faker-js/faker": "^9.4.0",
+    "ts-node": "^10.9.2",
+    "winston": "^3.17.0",
+    "dotenv": "^16.4.7",
+    "fs-extra": "^11.2.0",
+    "allure-playwright": "^3.2.0"
+  }
+}
