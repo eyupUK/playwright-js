@@ -143,6 +143,5 @@ test.describe('HackerNews Page Tests', () => {
       logger.fail(`An error occurred while verifying the tabs: ${error}`);
       throw error;
     }
-
   });
 });
