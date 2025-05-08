@@ -48,7 +48,7 @@ export function options(testName: string, logLevel: string) {
     };
 
     logger.fail = (message) => {
-        logger.error(`❌ ${message}`);
+        logger.error(`❌ ❌ ❌  ${message}`);
     };
     return logger;
 }

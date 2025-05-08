@@ -44,6 +44,13 @@ test.describe('HackerNews Page Tests', () => {
   // teardown
   test.afterEach(async ({ page }, testInfo) => {
     logger.info(`🏁 🏁 🏁  ${testInfo.title} 🏁 🏁 🏁 TEST FINISHED 🏁 🏁 🏁 `);
+    if (testInfo.status === 'failed') {
+      logger.fail('Test Failed: ' + testInfo.title);
+    }
+    else {
+      logger.info('Test Result: ' + testInfo.status.toUpperCase());
+    }
+    logger.info('Closing the page...');
   });
 
 
@@ -54,14 +61,14 @@ test.describe('HackerNews Page Tests', () => {
     try {
       datesTimes = await newLinksPage.fetchDatesOfTheFirstNumberOfArticles(100);
     } catch (error) {
-      logger.fail('An error occurred while fetching the dates and times: ' + error);
+      logger.error('An error occurred while fetching the dates and times: ' + error);
       throw error;
     }
     logger.info('Asserting the dates and times are sorted in descending order');
     try {
       expect(newLinksPage.areDatesSortedDescending(datesTimes)).toBe(true);
     } catch (error) {
-      logger.fail('An error occurred while fetching the dates and times: ' + error);
+      logger.error('An error occurred while fetching the dates and times: ' + error);
       throw error;
     }
     
@@ -86,7 +93,7 @@ test.describe('HackerNews Page Tests', () => {
         logger.info('Captcha Screen is displayed. Please try again later');
       } 
       else {
-        logger.fail('An unexpected error occurred: ' + error);
+        logger.error('An unexpected error occurred: ' + error);
         throw error;
       }
     }
@@ -114,7 +121,7 @@ test.describe('HackerNews Page Tests', () => {
       expect(isLoggedIn).toBeTruthy();
       logger.pass(`${testInfo.title} TEST PASSED`);
     } catch (error) {
-      logger.fail('An unexpected error occurred: ' + error);
+      logger.error('An unexpected error occurred: ' + error);
       throw error;
     }
   });
@@ -140,7 +147,7 @@ test.describe('HackerNews Page Tests', () => {
       logger.pass(`${testInfo.title} TEST PASSED`);
 
     } catch (error) {
-      logger.fail(`An error occurred while verifying the tabs: ${error}`);
+      logger.error(`An error occurred while verifying the tabs: ${error}`);
       throw error;
     }
   });

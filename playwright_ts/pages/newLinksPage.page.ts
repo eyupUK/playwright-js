@@ -32,13 +32,10 @@ export default class NewLinksPage{
     const creationDates = await this.Elements.creationDates;
     let datesTimes: number[] = [];
     datesTimes = await this.getCreationDatesAsNumbers(creationDates, datesTimes, rankings);
-    console.log('datesTimes', datesTimes);
     while (datesTimes.length < rankings) {
       await this.Elements.moreLink.click();
       const tempCreations = await this.Elements.creationDates;
       datesTimes = await this.getCreationDatesAsNumbers(tempCreations, datesTimes, rankings);
-      console.log('datesTimes', datesTimes);
-
     }
     return datesTimes;
   }

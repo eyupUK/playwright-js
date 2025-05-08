@@ -11,13 +11,13 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@faker-js/faker": "^9.4.0",
     "@playwright/test": "^1.52.0",
     "@types/node": "^22.15.11",
-    "@faker-js/faker": "^9.4.0",
-    "ts-node": "^10.9.2",
-    "winston": "^3.17.0",
+    "allure-playwright": "^3.2.0",
     "dotenv": "^16.4.7",
     "fs-extra": "^11.2.0",
-    "allure-playwright": "^3.2.0"
+    "ts-node": "^10.9.2",
+    "winston": "^3.17.0"
   }
 }
