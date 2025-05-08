@@ -41,6 +41,12 @@ export default class BasePage {
     loginLink: this.page.getByRole('link', { name: 'login' })
   } 
 
+  /**
+   * Navigates to a specific tab on the page by clicking on the tab link.
+   *
+   * @param tabName - The name of the tab to navigate to. This should match the text of the tab link exactly.
+   * @returns A promise that resolves when the click action is completed.
+   */
   async navigateToTab(tabName: string) {
     await this.page.locator("//span[@class='pagetop']//a[.='" + tabName + "']").click();
   }

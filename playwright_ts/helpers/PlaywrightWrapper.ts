@@ -18,7 +18,6 @@ export default class PlaywrightWrapper {
     await element.click();
   }
 
-
   async waitAndClickOnElementByLocatorAPI(locator: Locator) {
     const element = locator;
     await element.waitFor({

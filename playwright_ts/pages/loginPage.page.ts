@@ -39,11 +39,12 @@ export default class LoginPage{
 
 
   async registerARandomUser() {
-    const randomUsername: string = faker.internet.username();
+    const randomUsername: string = this.createValidUsername();
     const randomPassword: string = faker.internet.password();
     await this.Elements.createAccountUsernameInput.fill(randomUsername);
     await this.Elements.createAccountPasswordInput.fill(randomPassword);
     await this.Elements.createAccountBtn.click();
+    console.log('randomUsername created', randomUsername);
     return randomUsername;
   }
 
@@ -57,6 +58,25 @@ export default class LoginPage{
     return userNameText === username;
   }
 
+  /**
+   * Generates a sanitized username.
+   *
+   * This method creates a username using the `faker` library and ensures it is sanitized
+   * by removing any characters that are not alphanumeric, underscores, or hyphens.
+   * If the sanitized username is less than 2 characters long, it appends a random
+   * two-digit number to ensure a minimum length. The final username is truncated
+   * to a maximum of 15 characters.
+   *
+   * @returns {string} A sanitized and truncated username.
+   */
+  createValidUsername() {
+    let rawUsername = faker.internet.username();
+    let sanitized = rawUsername.replace(/[^a-zA-Z0-9_-]/g, '');
+    if (sanitized.length < 2) {
+      sanitized = sanitized + faker.number.int({ min: 10, max: 99 }); // pad
+    }
+    return sanitized.substring(0, 15)
+  }
 
   async logOutUser() {
     await this.Elements.logOutLink.click();

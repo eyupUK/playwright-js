@@ -48,7 +48,7 @@ test.describe('HackerNews Page Tests', () => {
 
 
 
-  test('Task 1: Verify the articles are sorted by the descendant date and time', async ({ page }, testInfo) => {
+  test('Task 1: Verify the first 100 articles are sorted by the descendant date and time', async ({ page }, testInfo) => {
     logger.info('Extracting dates and times of the first 100 articles');
     let datesTimes: number[] = [];
     try {
@@ -68,7 +68,7 @@ test.describe('HackerNews Page Tests', () => {
     logger.pass(`${testInfo.title} TEST PASSED`);
   });
 
-  test('Captcha Handling Sample: Register a new random user test', async ({ page }, testInfo) => {
+  test('Sample Captcha Handling: Register a new random user test', async ({ page }, testInfo) => {
     await basePage.goToLoginPage();
     const randomUsername = await loginPage.registerARandomUser();
     await page.waitForTimeout(1000);
@@ -92,7 +92,7 @@ test.describe('HackerNews Page Tests', () => {
     }
   });
 
-  test('Login Test: Verify the user logs in with valid credentials successfully', async ({ page }, testInfo) => {
+  test('Sample Login Test: Verify the user logs in with valid credentials successfully', async ({ page }, testInfo) => {
     await basePage.goToLoginPage();
     const username = require('../credentials.json').username;
     const password = require('../credentials.json').password;
@@ -122,7 +122,7 @@ test.describe('HackerNews Page Tests', () => {
     
 
 
-  test('Dynamic XPath Sample: Verify the top navigation bar tabs take to the relevant pages', async ({ page }, testInfo) => {
+  test('Sample Dynamic XPath: Verify the top navigation bar tabs take to the relevant pages', async ({ page }, testInfo) => {
     const tabs = ['new', 'past', 'comments', 'ask', 'show', 'jobs', 'submit'];
     try {
       for (let i = 0; i < tabs.length; i++) {
