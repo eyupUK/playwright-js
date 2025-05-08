@@ -6,7 +6,7 @@ declare module "winston" {
         fail: (message: string) => void;
     }
 }
-export function options(testName, logLevel) {
+export function options(testName: string, logLevel: string) {
     // Fallback to a default name if scenarioName is undefined or empty
     const safeScenarioName = testName.replace(/[^a-zA-Z0-9-_]/g, "_") || "default_scenario";
 
