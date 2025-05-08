@@ -1,6 +1,9 @@
 # 🧪 QA Wolf Hacker News – Test Automation Framework
 
 This is a **Playwright-based test automation framework** designed for the **QA Wolf Hacker News Task**. It includes enhanced logging capabilities using **Winston logger**, detailed reporting with **Allure Reports**, and a modular structure for maintainable and scalable test automation.
+I also implemented 3 more test cases in order to show my implementations of POM and Wrapper class that I really enjoyed with.
+In this task, I also used Typescript as an OOP language, which is I feel more comfortable.
+I am really exicited to move forward to the next stage.
 
 ---
 
@@ -26,25 +29,23 @@ Before running the tests, ensure you have the following installed on your system
 ```
 qa_wolf_take_home/
 ├── tests/ # Contains test specs written using Playwright
-│ └── hackerNewsTest.spec.js
+│ └── hackerNewsTest.spec.ts
 ├── pages/ # Page Object Models (POM) for each application page
-│ ├── basePage.page.js
-│ ├── loginPage.page.js
-│ └── dashboardPage.page.js
+│ ├── basePage.page.ts
+│ ├── loginPage.page.ts
+│ └── newLinksPage.page.ts
 ├── helpers/ # Utility functions (e.g., logging, Allure integration)
-│ ├── logger.js
-│ └── allureReport.js
-├── hooks/ # Playwright hooks for setup/teardown
-│ └── hooks.js
+│ ├── logger.ts
+│ └── PlaywrightWrapper.ts
 ├── test-results/logs/ # Test execution logs created by Winston logger
 │ └── test-execution.log
 ├── allure-results/ # Allure raw result files (auto-generated)
 ├── allure-report/ # HTML Allure report (generated after tests)
 ├── playwright-report/ # Playwright HTML report output
 ├── test-results/ # Playwright test output
-├── fixture.js # Test fixtures for shared setup and teardown logic
-├── playwright.config.js # Playwright configuration file
-├── credentials.js # Credential management (should be kept secret)
+├── fixture.ts # Test fixtures for shared setup and teardown logic
+├── playwright.config.ts # Playwright configuration file
+├── credentials.json # Credential management (should be kept secret)
 ├── .env # Environment variables file
 ├── .gitignore # Git ignore file
 ├── package.json # Project metadata and dependencies
@@ -65,7 +66,7 @@ qa_wolf_take_home/
   - Includes setup and teardown logic for browser and context management.
   - Automatically attaches logs and screenshots for failed tests.
 - **Environment Handling**:
-  - Uses `.env` for managing environment variables like `BASE_URL`.
+  - Uses `.env` for managing environment variables, such as `BASE_URL`, `WORKERS`, `HEADLESS`.
 - **Parallel Test Execution**: Supports running tests in parallel for faster execution.
 
 ---
@@ -110,9 +111,9 @@ qa_wolf_take_home/
 npm install -g allure-commandline --save-dev
 ```
 
-#### Add sensitive files like .env and logs/ to .gitignore to avoid pushing them to version control
+#### Add sensitive files to .gitignore to avoid pushing them to version control, such as credentials.json, .env and logs...
 
-#### The fixture.js file provides shared setup logic for browser, context, and logging. It integrates the Winston logger for capturing test logs
+#### The fixture.ts file provides shared setup logic for browser, context, and logging. It integrates the Winston logger for capturing test logs
 
 ### 🛠️ Dependencies
 
