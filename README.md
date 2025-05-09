@@ -115,6 +115,10 @@ qa_wolf_take_home/
 ### 5. Generate Allure report
 
 ```bash
+   allure serve
+```
+or 
+```bash
    npm run allure
 ```
 
