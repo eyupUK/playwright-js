@@ -28,7 +28,7 @@ Before running the tests, ensure you have the following installed on your system
 
 ## 📁 Folder Structure
 
-![Folder Structure Diagram](./images/project_folders.png)
+![Folder Structure Diagram](./images/project-folders.png)
 
 ```
 qa_wolf_take_home/
@@ -75,13 +75,12 @@ qa_wolf_take_home/
 - **Parallel Test Execution**: Supports running tests in parallel for faster execution.
 
 ### Test Execution of GitHub Actions 
-![GitHub Actions](./images/github_actions_whole_process.png)
-
-### Test Completion of GitHub Actions
-![Test Result](./images/test_result.png)
+![GitHub Actions](./images/github-actions-pipeline.png)
 
 ### Playwright Test Report of GitHub Actions
 ![Test Report](./images/test_report.png)
+
+![Test Report](./images/test-reports.png)
 
 
 ---
