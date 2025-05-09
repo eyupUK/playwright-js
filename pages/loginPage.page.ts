@@ -44,7 +44,6 @@ export default class LoginPage{
     await this.Elements.createAccountUsernameInput.fill(randomUsername);
     await this.Elements.createAccountPasswordInput.fill(randomPassword);
     await this.Elements.createAccountBtn.click();
-    console.log('randomUsername created', randomUsername);
     return randomUsername;
   }
 
