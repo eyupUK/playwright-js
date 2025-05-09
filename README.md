@@ -31,30 +31,29 @@ Before running the tests, ensure you have the following installed on your system
 ![Folder Structure Diagram](./images/project-folders.png)
 
 ```
-qa_wolf_take_home/
-├── tests/ # Contains test specs written using Playwright
-│ └── hackerNewsTest.spec.ts
-├── pages/ # Page Object Models (POM) for each application page
-│ ├── basePage.page.ts
-│ ├── loginPage.page.ts
-│ └── newLinksPage.page.ts
-├── helpers/ # Utility functions (e.g., logging, Allure integration)
-│ ├── logger.ts
-│ └── PlaywrightWrapper.ts
-├── test-results/logs/ # Test execution logs created by Winston logger
-│ └── test-execution.log
-├── allure-results/ # Allure raw result files (auto-generated)
-├── allure-report/ # HTML Allure report (generated after tests)
-├── playwright-report/ # Playwright HTML report output
-├── test-results/ # Playwright test output
-├── fixture.ts # Test fixtures for shared setup and teardown logic
-├── playwright.config.ts # Playwright configuration file
-├── credentials.json # Credential management (should be kept secret)
-├── .env # Environment variables file
-├── .gitignore # Git ignore file
-├── package.json # Project metadata and dependencies
-├── package-lock.json # Dependency lock file
-└── README.md # Project documentation (you're reading it!)
+qa_wolf_task/
+├── tests/                # Test specifications
+│   └── hackerNewsTes.spec.ts
+├── pages/                # Page Object Models (POM)
+│   ├── basePage.page.ts
+│   ├── loginPage.page.ts
+│   └── newLinksPage.page.ts
+├── helpers/              # Utility functions
+│   ├── logger.ts         # Winston logger integration
+│   ├── PlaywrightWrapper.ts
+│   ├── apiUtils.ts
+│   └── cleanTestResults.ts
+├── test-results/         # Test execution logs and results
+├── allure-results/       # Allure raw result files
+├── playwright-report/    # Playwright HTML reports
+├── fixture.ts            # Shared setup/teardown logic
+├── playwright.config.ts  # Playwright configuration
+├── credentials.json      # Credential management
+├── .env                  # Environment variables
+├── .gitignore            # Ignored files
+├── package.json          # Project metadata and dependencies
+├── README.md             # Project documentation
+└── task_readme.md        # Assignment instructions
 ```
 
 ## ✨ Features
@@ -134,6 +133,65 @@ or
 npm install -g allure-commandline --save-dev
 ```
 
+## 🔑 Core Components
+### 1. Test Cases (tests/hackerNewsTes.spec.ts)
+- Task 1: Verifies the first 100 articles are sorted by descending date.
+- Task 2: Handles CAPTCHA and registers a random user.
+- Task 3: Verifies login functionality with valid credentials.
+- Task 4: Validates navigation tabs on the Hacker News page.
+- API Test: Verifies user account details using the Hacker News API.
+
+### 2. Page Object Models (POM)
+- pages/basePage.page.ts
+Provides navigation utilities for the Hacker News website.
+Example: Navigating to tabs like "new", "past", "comments".
+- pages/loginPage.page.ts
+Handles login, user registration, and CAPTCHA detection.
+Example: Registers a random user using faker.
+- pages/newLinksPage.page.ts
+Fetches and validates article creation dates.
+Example: Ensures articles are sorted by descending timestamps.
+
+### 3. Helpers
+- helpers/PlaywrightWrapper.ts
+
+Provides reusable methods for interacting with Playwright locators.
+Example: waitAndClickOnElementByLocatorAPI.
+- helpers/logger.ts
+
+Configures Winston logger for capturing test execution logs.
+Example: Logs test start, pass, and failure messages.
+- helpers/apiUtils.ts
+
+Provides utility functions for making HTTP requests.
+Example: Sends GET requests to the Hacker News API.
+- helpers/cleanTestResults.ts
+
+Deletes test result directories like test-results/, allure-results/, and playwright-report/.
+
+### 4. Configuration
+- playwright.config.ts
+
+Configures Playwright settings like baseURL, headless, and reporters.
+Example: Enables Allure and HTML reporting.
+- .env
+
+Stores environment variables like BASE_URL and HEADLESS.
+
+## 🛠️ CI/CD Pipeline
+The project includes a GitHub Actions workflow to automate test execution:
+
+Triggers:
+
+On push to main or master branches.
+
+Steps:
+
+Installs dependencies and Playwright browsers.
+Runs tests using xvfb-run for headless execution.
+Uploads Playwright reports as artifacts.
+
+## 🧠 Notes
 #### Add sensitive files to .gitignore to avoid pushing them to version control, such as credentials.json, .env and logs...
 
 #### The fixture.ts file provides shared setup logic for browser, context, and logging. It integrates the Winston logger for capturing test logs
@@ -149,3 +207,7 @@ Allure Playwright: Integration for generating Allure reports.
 dotenv: For managing environment variables.
 
 @faker-js/faker: For generating random test data.
+
+cross-env: For handling cross-platform issues, like folder path confusions of windows and linux/mac 
+
+axios: For API calls
