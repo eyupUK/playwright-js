@@ -5,7 +5,8 @@
   "scripts": {
     "test": "cross-env npx playwright test",
     "test:ui": "cross-env npx playwright test --ui",
-    "allure": "cross-env npx allure generate ./allure-results --clean && npx allure open"
+    "allure": "cross-env npx allure generate ./allure-results --clean && npx allure open",
+    "clean": "ts-node ./helpers/cleanTestResults.ts"
   },
   "author": "eyupUK",
   "license": "ISC",

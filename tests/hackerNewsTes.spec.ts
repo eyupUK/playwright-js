@@ -1,25 +1,20 @@
-import { fixture } from "../fixture";
-import test, { expect } from '@playwright/test';
 import NewLinksPage from '../pages/newLinksPage.page';
 import LoginPage from '../pages/loginPage.page';
 import BasePage from '../pages/basePage.page';
 import PlaywrightWrapper from "../helpers/PlaywrightWrapper";
-import { Logger } from "winston";
-const {options} = require('../helpers/logger');
+import { expect, test } from '../fixture';
+
 
 let newLinksPage: NewLinksPage;
 let loginPage: LoginPage;
 let basePage: BasePage;
-let logger: Logger;
 let base: PlaywrightWrapper;
 
 test.describe('HackerNews Page Tests', () => {
   
   // setup 
-  test.beforeEach(async ({ page }, testInfo) => {
+  test.beforeEach(async ({ page, logger}, testInfo) => {
     base = new PlaywrightWrapper(page);
-    fixture.logger = options(testInfo.title, 'info');
-    logger = fixture.logger;
     logger.info(`🚀 🚀 🚀 ${testInfo.title} 🚀 🚀 🚀 TEST STARTED 🚀 🚀 🚀`);
     const baseUrl = process.env.BASE_URL;
     if (!baseUrl) {
@@ -42,12 +37,12 @@ test.describe('HackerNews Page Tests', () => {
 
 
   // teardown
-  test.afterEach(async ({ page }, testInfo) => {
+  test.afterEach(async ({ page, logger}, testInfo) => {
     logger.info(`🏁 🏁 🏁  ${testInfo.title} 🏁 🏁 🏁 TEST FINISHED 🏁 🏁 🏁 `);
     if (testInfo.status === 'failed') {
       logger.fail('Test Failed: ' + testInfo.title);
     }
-    else{
+    else if(testInfo.status !== 'passed'){
       logger.debug('Test Result: ' + testInfo.status.toUpperCase());
     }
     logger.info('Closing the page...');
@@ -55,7 +50,7 @@ test.describe('HackerNews Page Tests', () => {
 
 
 
-  test('Task 1: Verify the first 100 articles are sorted by the descendant date and time', async ({ page }, testInfo) => {
+  test('Task 1: Verify the first 100 articles are sorted by the descendant date and time', async ({ page, logger }, testInfo) => {
     logger.info('Extracting dates and times of the first 100 articles');
     let datesTimes: number[] = [];
     try {
@@ -75,7 +70,7 @@ test.describe('HackerNews Page Tests', () => {
     logger.pass(`${testInfo.title} TEST PASSED`);
   });
 
-  test('Sample Captcha Handling: Register a new random user test', async ({ page }, testInfo) => {
+  test('Sample Captcha Handling: Register a new random user test', async ({ page, logger }, testInfo) => {
     await basePage.goToLoginPage();
     const randomUsername = await loginPage.registerARandomUser();
     await page.waitForTimeout(1000);
@@ -99,7 +94,7 @@ test.describe('HackerNews Page Tests', () => {
     }
   });
 
-  test('Sample Login Test: Verify the user logs in with valid credentials successfully', async ({ page }, testInfo) => {
+  test('Sample Login Test: Verify the user logs in with valid credentials successfully', async ({ page, logger }, testInfo) => {
     await basePage.goToLoginPage();
     const username = require('../credentials.json').username;
     const password = require('../credentials.json').password;
@@ -129,7 +124,7 @@ test.describe('HackerNews Page Tests', () => {
     
 
 
-  test('Sample Dynamic XPath: Verify the top navigation bar tabs take to the relevant pages', async ({ page }, testInfo) => {
+  test('Sample Dynamic XPath: Verify the top navigation bar tabs take to the relevant pages', async ({ page, logger }, testInfo) => {
     const tabs = ['new', 'past', 'comments', 'ask', 'show', 'jobs', 'submit'];
     try {
       for (let i = 0; i < tabs.length; i++) {

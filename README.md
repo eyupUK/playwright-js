@@ -122,6 +122,11 @@ or
    npm run allure
 ```
 
+### 6. Clean test results
+```bash
+   npm run clean
+```
+
 ### 🧠 Notes
 
 #### Ensure allure-commandline is installed globally if you plan to use Allure frequently
