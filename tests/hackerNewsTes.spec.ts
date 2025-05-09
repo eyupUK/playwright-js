@@ -47,8 +47,8 @@ test.describe('HackerNews Page Tests', () => {
     if (testInfo.status === 'failed') {
       logger.fail('Test Failed: ' + testInfo.title);
     }
-    else {
-      logger.info('Test Result: ' + testInfo.status.toUpperCase());
+    else{
+      logger.debug('Test Result: ' + testInfo.status.toUpperCase());
     }
     logger.info('Closing the page...');
   });

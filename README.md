@@ -8,6 +8,7 @@ I am really exicited to move forward to the next stage.
 
 ---
 
+
 ## ⚙️ Pre-requisites
 
 Before running the tests, ensure you have the following installed on your system:
@@ -26,6 +27,8 @@ Before running the tests, ensure you have the following installed on your system
    - Download and install from [Git official website](https://git-scm.com/).
 
 ## 📁 Folder Structure
+
+![Folder Structure Diagram](./images/project_folders.png)
 
 ```
 qa_wolf_take_home/
@@ -58,17 +61,28 @@ qa_wolf_take_home/
 
 - **Playwright Test Runner**: Enables browser automation and test execution.
 - **Page Object Model (POM)**: Provides maintainable and reusable test code for each application page.
+- **PlaywrightWrapper**: Provides custom reusable methods for Playwright interactions.
 - **Winston Logger Integration**:
-  - Captures logs for each test run in `logs/test-execution.log`.
+  - Captures logs for each test run in `test-results/logs/<testTitle>.log`.
   - Logs are also attached to Allure reports for better debugging.
 - **Allure Reporter Integration**:
   - Generates detailed and interactive reports for test execution.
 - **Custom Hooks**:
-  - Includes setup and teardown logic for browser and context management.
-  - Automatically attaches logs and screenshots for failed tests.
+  - Includes setup and teardown logic to set up Logger or anything else if needed.
+  - Automatically attaches logs.
 - **Environment Handling**:
   - Uses `.env` for managing environment variables, such as `BASE_URL`, `WORKERS`, `HEADLESS`.
 - **Parallel Test Execution**: Supports running tests in parallel for faster execution.
+
+### Test Execution of GitHub Actions 
+![GitHub Actions](./images/github_actions_whole_process.png)
+
+### Test Completion of GitHub Actions
+![Test Result](./images/test_result.png)
+
+### Playwright Test Report of GitHub Actions
+![Test Report](./images/test_report.png)
+
 
 ---
 
