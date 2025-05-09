@@ -1,8 +1,9 @@
 # 🧪 QA Wolf Hacker News – Test Automation Framework
 
 This is a **Playwright-based test automation framework** designed for the **QA Wolf Hacker News Task**. It includes enhanced logging capabilities using **Winston logger**, detailed reporting with **Allure Reports**, and a modular structure for maintainable and scalable test automation.
-I also implemented 3 more test cases in order to show my implementations of POM and Wrapper class that I really enjoyed with.
-In this task, I also used **Typescript** as an OOP language and **GitHub Actions** as a CI/CD pipeline platform, which is I feel more comfortable.
+I also implemented 3 more test cases in order to show my implementations of **POM and Wrapper class** that I really enjoyed with.
+In this task, I used **Typescript** as an OOP language and **GitHub Actions** as a CI/CD pipeline platform, which is I feel more comfortable.
+
 I am really exicited to move forward to the next stage.
 
 ---
