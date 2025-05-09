@@ -11,7 +11,7 @@ export default class BasePage {
   private base: PlaywrightWrapper;
 
   constructor(private page: Page) {
-      this.base = new PlaywrightWrapper(page);
+    this.base = new PlaywrightWrapper(page);
   }
 
 
@@ -39,7 +39,7 @@ export default class BasePage {
     jobsLink: this.page.getByRole('link', { name: 'jobs' }),
     submitLink: this.page.getByRole('link', { name: 'submit' }),
     loginLink: this.page.getByRole('link', { name: 'login' })
-  } 
+  }
 
   /**
    * Navigates to a specific tab on the page by clicking on the tab link.

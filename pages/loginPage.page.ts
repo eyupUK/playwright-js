@@ -2,11 +2,11 @@ import { faker } from '@faker-js/faker';
 import { Page } from '@playwright/test';
 import PlaywrightWrapper from '../helpers/PlaywrightWrapper';
 
-export default class LoginPage{
+export default class LoginPage {
   private base: PlaywrightWrapper;
 
   constructor(private page: Page) {
-      this.base = new PlaywrightWrapper(page);
+    this.base = new PlaywrightWrapper(page);
   }
 
   private Elements = {
@@ -81,5 +81,5 @@ export default class LoginPage{
     await this.Elements.logOutLink.click();
   }
 
-  
+
 };

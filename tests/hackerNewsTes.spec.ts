@@ -12,9 +12,9 @@ let basePage: BasePage;
 let base: PlaywrightWrapper;
 
 test.describe('HackerNews Page Tests', () => {
-  
+
   // setup 
-  test.beforeEach(async ({ page, logger}, testInfo) => {
+  test.beforeEach(async ({ page, logger }, testInfo) => {
     base = new PlaywrightWrapper(page);
     logger.info(`🚀 🚀 🚀 ${testInfo.title} 🚀 🚀 🚀 TEST STARTED 🚀 🚀 🚀`);
     const baseUrl = process.env.BASE_URL;
@@ -30,7 +30,7 @@ test.describe('HackerNews Page Tests', () => {
       await base.navigateTo(baseUrl + '/newest');
       logger.info(`🚀 Navigated to ${baseUrl} by .env`);
     }
-    
+
     loginPage = new LoginPage(page);
     newLinksPage = new NewLinksPage(page);
     basePage = new BasePage(page);
@@ -38,15 +38,15 @@ test.describe('HackerNews Page Tests', () => {
 
 
   // teardown
-  test.afterEach(async ({ page, logger}, testInfo) => {
+  test.afterEach(async ({ page, logger }, testInfo) => {
     logger.info(`🏁 🏁 🏁  ${testInfo.title} 🏁 🏁 🏁 TEST FINISHED 🏁 🏁 🏁 `);
     if (testInfo.status === 'failed') {
       logger.fail('Test Failed: ' + testInfo.title);
     }
-    else if(testInfo.status === 'passed'){
+    else if (testInfo.status === 'passed') {
       logger.pass('Test Result: ' + testInfo.status.toUpperCase());
     }
-    else{
+    else {
       logger.debug('Test Result: ' + testInfo.status.toUpperCase());
     }
     logger.info('Closing the page...');
@@ -87,7 +87,7 @@ test.describe('HackerNews Page Tests', () => {
       if (isCaptchaVisible) {
         expect(await loginPage.isCaptchaVisible()).toBeTruthy();
         logger.info('Captcha Screen is displayed. Please try again later');
-      } 
+      }
       else {
         logger.error('An unexpected error occurred: ' + error);
         throw error;
@@ -121,7 +121,7 @@ test.describe('HackerNews Page Tests', () => {
     }
   });
 
-    
+
 
 
   test('Sample Dynamic XPath: Verify the top navigation bar tabs take to the relevant pages', async ({ page, logger }) => {

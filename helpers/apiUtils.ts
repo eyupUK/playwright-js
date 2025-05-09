@@ -3,11 +3,9 @@ import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 let MAX_RETRIES = 3;
 
 export default class APIUtils {
-    // Constructor to initialize axios
 
-    // constructor() {}
     // Utility function to make HTTP requests
-    public static async sendRequest (
+    public static async sendRequest(
         base: string,
         method: string,
         endpoint: string,
@@ -18,7 +16,7 @@ export default class APIUtils {
         const url = `${base}${endpoint}`;
         console.log('Request URL:', url);
 
-       
+
         // Prepare the axios configuration
         const config: AxiosRequestConfig = {
             method,          // HTTP method (e.g., 'POST', 'GET', etc.)
@@ -36,11 +34,11 @@ export default class APIUtils {
                 throw error;  // Rethrow the error after logging it
             }
         } catch (error) {
-            if(--MAX_RETRIES > 0){
+            if (--MAX_RETRIES > 0) {
                 console.log('Retrying request... Remaining attempts:', MAX_RETRIES);
                 return await APIUtils.sendRequest(base, method, endpoint, data, headers, queryParams);
             }
-            else{
+            else {
                 console.error('Max retries reached. Request failed:', error);
                 throw error;  // Rethrow the error after logging it
             }

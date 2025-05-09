@@ -1,13 +1,13 @@
 import { Page } from "@playwright/test";
 import PlaywrightWrapper from "../helpers/PlaywrightWrapper";
 
-export default class NewLinksPage{
+export default class NewLinksPage {
 
-    private base: PlaywrightWrapper;
+  private base: PlaywrightWrapper;
 
-    constructor(private page: Page) {
-        this.base = new PlaywrightWrapper(page);
-    }
+  constructor(private page: Page) {
+    this.base = new PlaywrightWrapper(page);
+  }
 
 
   private Elements = {
@@ -51,12 +51,12 @@ export default class NewLinksPage{
    * @returns The updated `datesTimes` array containing the parsed numeric date values.
    */
   async getCreationDatesAsNumbers(creationDates: any[], datesTimes: number[], rankings: number) {
-    for(const date of creationDates) {
+    for (const date of creationDates) {
       if (datesTimes.length === rankings) {
         break;
       }
       const dateText = await date.getAttribute('title');
-      
+
       // title attribute contains the date and time in the format "2025-05-07T09:41:13 1746610873" and we need to extract the Unix timestamp, representing the number of seconds since January 1, 1970
       const cleanedDate = dateText.split(' ')[1]; // to split the Unix timestamp, alternatively use dateText.substring(dateText.indexOf(' '))
       datesTimes.push(parseInt(cleanedDate));
