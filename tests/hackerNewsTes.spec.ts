@@ -148,6 +148,29 @@ test.describe('HackerNews Page Tests', () => {
 });
 
 test.describe('HackerNews API Tests', () => {
+   
+  // setup 
+    test.beforeEach(async ({ logger }, testInfo) => {
+      logger.info(`🚀 🚀 🚀 ${testInfo.title} 🚀 🚀 🚀 TEST STARTED 🚀 🚀 🚀`);
+      // setup API client or any other necessary setup
+    });
+  
+  
+    // teardown
+    test.afterEach(async ({ logger }, testInfo) => {
+      logger.info(`🏁 🏁 🏁  ${testInfo.title} 🏁 🏁 🏁 TEST FINISHED 🏁 🏁 🏁 `);
+      if (testInfo.status === 'failed') {
+        logger.fail('Test Failed: ' + testInfo.title);
+      }
+      else if (testInfo.status === 'passed') {
+        logger.pass('Test Result: ' + testInfo.status.toUpperCase());
+      }
+      else {
+        logger.debug('Test Result: ' + testInfo.status.toUpperCase());
+      }
+    });
+  
+  
   test('API Test Case: Verify the API correctly displays the detail of the user account pre-registered by Create Accout on UI', async ({ logger }) => {
     // This test is based on the documentation in https://github.com/HackerNews/API
     const username = require('../credentials.json').username;
