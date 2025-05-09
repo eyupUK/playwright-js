@@ -3,6 +3,7 @@ import LoginPage from '../pages/loginPage.page';
 import BasePage from '../pages/basePage.page';
 import PlaywrightWrapper from "../helpers/PlaywrightWrapper";
 import { expect, test } from '../fixture';
+import APIUtils from '../helpers/apiUtils';
 
 
 let newLinksPage: NewLinksPage;
@@ -42,7 +43,10 @@ test.describe('HackerNews Page Tests', () => {
     if (testInfo.status === 'failed') {
       logger.fail('Test Failed: ' + testInfo.title);
     }
-    else if(testInfo.status !== 'passed'){
+    else if(testInfo.status === 'passed'){
+      logger.pass('Test Result: ' + testInfo.status.toUpperCase());
+    }
+    else{
       logger.debug('Test Result: ' + testInfo.status.toUpperCase());
     }
     logger.info('Closing the page...');
@@ -50,7 +54,7 @@ test.describe('HackerNews Page Tests', () => {
 
 
 
-  test('Task 1: Verify the first 100 articles are sorted by the descendant date and time', async ({ page, logger }, testInfo) => {
+  test('Task 1: Verify the first 100 articles are sorted by the descendant date and time', async ({ page, logger }) => {
     logger.info('Extracting dates and times of the first 100 articles');
     let datesTimes: number[] = [];
     try {
@@ -66,11 +70,9 @@ test.describe('HackerNews Page Tests', () => {
       logger.error('An error occurred while fetching the dates and times: ' + error);
       throw error;
     }
-    
-    logger.pass(`${testInfo.title} TEST PASSED`);
   });
 
-  test('Sample Captcha Handling: Register a new random user test', async ({ page, logger }, testInfo) => {
+  test('Sample Captcha Handling: Register a new random user test', async ({ page, logger }) => {
     await basePage.goToLoginPage();
     const randomUsername = await loginPage.registerARandomUser();
     await page.waitForTimeout(1000);
@@ -80,7 +82,6 @@ test.describe('HackerNews Page Tests', () => {
       expect(isLoggedIn).toBeTruthy();
       logger.info('A Random user is registered successfully');
       await loginPage.logOutUser();
-      logger.pass(`${testInfo.title} TEST PASSED`);
     } catch (error) {
       const isCaptchaVisible = await loginPage.isCaptchaVisible();
       if (isCaptchaVisible) {
@@ -94,7 +95,7 @@ test.describe('HackerNews Page Tests', () => {
     }
   });
 
-  test('Sample Login Test: Verify the user logs in with valid credentials successfully', async ({ page, logger }, testInfo) => {
+  test('Sample Login Test: Verify the user logs in with valid credentials successfully', async ({ page, logger }) => {
     await basePage.goToLoginPage();
     const username = require('../credentials.json').username;
     const password = require('../credentials.json').password;
@@ -107,14 +108,13 @@ test.describe('HackerNews Page Tests', () => {
       await loginPage.login(username, password);
       await page.waitForTimeout(1000);
     } catch (error) {
-      logger.fail('An unexpected error occurred: ' + error);
+      logger.error('An unexpected error occurred: ' + error);
       throw error;
     }
     try {
       logger.info('Attempting to verify if user is logged in successfully...');
       const isLoggedIn = await loginPage.verifyUserSuccessfullyLoggedIn(username);
       expect(isLoggedIn).toBeTruthy();
-      logger.pass(`${testInfo.title} TEST PASSED`);
     } catch (error) {
       logger.error('An unexpected error occurred: ' + error);
       throw error;
@@ -124,7 +124,7 @@ test.describe('HackerNews Page Tests', () => {
     
 
 
-  test('Sample Dynamic XPath: Verify the top navigation bar tabs take to the relevant pages', async ({ page, logger }, testInfo) => {
+  test('Sample Dynamic XPath: Verify the top navigation bar tabs take to the relevant pages', async ({ page, logger }) => {
     const tabs = ['new', 'past', 'comments', 'ask', 'show', 'jobs', 'submit'];
     try {
       for (let i = 0; i < tabs.length; i++) {
@@ -139,11 +139,25 @@ test.describe('HackerNews Page Tests', () => {
           expect((await page.title()).toLowerCase()).toContain(tabs[i]);
         }
       }
-      logger.pass(`${testInfo.title} TEST PASSED`);
-
     } catch (error) {
       logger.error(`An error occurred while verifying the tabs: ${error}`);
       throw error;
     }
+  });
+
+});
+
+test.describe('HackerNews API Tests', () => {
+  test('API Test Case: Verify the API correctly displays the detail of the user account pre-registered by Create Accout on UI', async ({ logger }) => {
+    // This test is based on the documentation in https://github.com/HackerNews/API
+    const username = require('../credentials.json').username;
+    const response = await APIUtils.sendRequest(`https://hacker-news.firebaseio.com/v0/user/${username}.json?print=pretty`, "get", "")
+    const responseData = await response.data;
+    expect(response.status).toBe(200);
+    expect(responseData).toBeDefined();
+    expect(responseData.created).toBe(1746693891);
+    expect(responseData.karma).toBe(1);
+    expect(responseData.id).toBe("eyuptesting");
+    logger.info(`User account details: ${JSON.stringify(responseData)}`);
   });
 });

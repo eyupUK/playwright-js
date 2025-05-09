@@ -80,4 +80,6 @@ export default class LoginPage{
   async logOutUser() {
     await this.Elements.logOutLink.click();
   }
+
+  
 };
