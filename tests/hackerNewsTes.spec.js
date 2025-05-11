@@ -6,10 +6,10 @@ import { expect, test } from '../fixture';
 import APIUtils from '../helpers/apiUtils';
 
 
-let newLinksPage: NewLinksPage;
-let loginPage: LoginPage;
-let basePage: BasePage;
-let base: PlaywrightWrapper;
+let newLinksPage;
+let loginPage;
+let basePage;
+let base;
 
 test.describe('HackerNews Page Tests', () => {
 
@@ -56,7 +56,7 @@ test.describe('HackerNews Page Tests', () => {
 
   test('Task 1: Verify the first 100 articles are sorted by the descendant date and time', async ({ page, logger }) => {
     logger.info('Extracting dates and times of the first 100 articles');
-    let datesTimes: number[] = [];
+    let datesTimes = [];
     try {
       datesTimes = await newLinksPage.fetchDatesOfTheFirstNumberOfArticles(100);
     } catch (error) {

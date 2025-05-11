@@ -1,5 +1,5 @@
 import * as fs from 'node:fs';
-import path = require("path")
+import path from 'path';
 
 const directoriesToClean = [
   './test-results',
@@ -7,7 +7,7 @@ const directoriesToClean = [
   './playwright-report',
 ];
 
-function deleteFolderRecursive(folderPath: string) {
+function deleteFolderRecursive(folderPath) {
   if (fs.existsSync(folderPath)) {
     fs.readdirSync(folderPath).forEach((file) => {
       const currentPath = path.join(folderPath, file);

@@ -1,8 +1,8 @@
 # 🧪 QA Wolf Hacker News – Test Automation Framework
 
 This is a **Playwright-based test automation framework** designed for the **QA Wolf Hacker News Task**. It includes enhanced logging capabilities using **Winston logger**, detailed reporting with **Allure Reports**, and a modular structure for maintainable and scalable test automation.
-I also implemented 3 more test cases in order to show my implementations of **POM and Wrapper class** that I really enjoyed with.
-In this task, I used **Typescript** as an OOP language and **GitHub Actions** as a CI/CD pipeline platform, which is I feel more comfortable.
+I also implemented 4 more test cases in order to show my implementations of **API Testing, POM and Wrapper class** that I really enjoyed with.
+In this task, I used **GitHub Actions** as a CI/CD pipeline platform.
 
 I am really exicited to move forward to the next stage.
 
@@ -33,21 +33,21 @@ Before running the tests, ensure you have the following installed on your system
 ```
 qa_wolf_task/
 ├── tests/                # Test specifications
-│   └── hackerNewsTes.spec.ts
+│   └── hackerNewsTes.spec.js
 ├── pages/                # Page Object Models (POM)
-│   ├── basePage.page.ts
-│   ├── loginPage.page.ts
-│   └── newLinksPage.page.ts
+│   ├── basePage.page.js
+│   ├── loginPage.page.js
+│   └── newLinksPage.page.js
 ├── helpers/              # Utility functions
-│   ├── logger.ts         # Winston logger integration
-│   ├── PlaywrightWrapper.ts
-│   ├── apiUtils.ts
-│   └── cleanTestResults.ts
+│   ├── logger.js         # Winston logger integration
+│   ├── PlaywrightWrapper.js
+│   ├── apiUtils.js
+│   └── cleanTestResults.js
 ├── test-results/         # Test execution logs and results
 ├── allure-results/       # Allure raw result files
 ├── playwright-report/    # Playwright HTML reports
-├── fixture.ts            # Shared setup/teardown logic
-├── playwright.config.ts  # Playwright configuration
+├── fixture.js            # Shared setup/teardown logic
+├── playwright.config.js  # Playwright configuration
 ├── credentials.json      # Credential management
 ├── .env                  # Environment variables
 ├── .gitignore            # Ignored files
@@ -134,43 +134,43 @@ npm install -g allure-commandline --save-dev
 ```
 
 ## 🔑 Core Components
-### 1. Test Cases (tests/hackerNewsTes.spec.ts)
+### 1. Test Cases (tests/hackerNewsTes.spec.js)
 - Task 1: Verifies the first 100 articles are sorted by descending date.
 - Task 2: Handles CAPTCHA and registers a random user.
 - Task 3: Verifies login functionality with valid credentials.
 - Task 4: Validates navigation tabs on the Hacker News page.
 - API Test: Verifies user account details using the Hacker News API.
 
-### 2. Page Object Models (POM)
-- pages/basePage.page.ts
+### 2. Page Object Models (POM)
+- pages/basePage.page.js
 Provides navigation utilities for the Hacker News website.
 Example: Navigating to tabs like "new", "past", "comments".
-- pages/loginPage.page.ts
+- pages/loginPage.page.js
 Handles login, user registration, and CAPTCHA detection.
 Example: Registers a random user using faker.
-- pages/newLinksPage.page.ts
+- pages/newLinksPage.page.js
 Fetches and validates article creation dates.
 Example: Ensures articles are sorted by descending timestamps.
 
-### 3. Helpers
-- helpers/PlaywrightWrapper.ts
+### 3. Helpers
+- helpers/PlaywrightWrapper.js
 
 Provides reusable methods for interacting with Playwright locators.
 Example: waitAndClickOnElementByLocatorAPI.
-- helpers/logger.ts
+- helpers/logger.js
 
 Configures Winston logger for capturing test execution logs.
 Example: Logs test start, pass, and failure messages.
-- helpers/apiUtils.ts
+- helpers/apiUtils.js
 
 Provides utility functions for making HTTP requests.
 Example: Sends GET requests to the Hacker News API.
-- helpers/cleanTestResults.ts
+- helpers/cleanTestResults.js
 
 Deletes test result directories like test-results/, allure-results/, and playwright-report/.
 
 ### 4. Configuration
-- playwright.config.ts
+- playwright.config.js
 
 Configures Playwright settings like baseURL, headless, and reporters.
 Example: Enables Allure and HTML reporting.
@@ -194,7 +194,7 @@ Uploads Playwright reports as artifacts.
 ## 🧠 Notes
 #### Add sensitive files to .gitignore to avoid pushing them to version control, such as credentials.json, .env and logs...
 
-#### The fixture.ts file provides shared setup logic for browser, context, and logging. It integrates the Winston logger for capturing test logs
+#### The fixture.js file provides shared setup logic for browser, context, and logging. It integrates the Winston logger for capturing test logs
 
 ### 🛠️ Dependencies
 

@@ -2,23 +2,23 @@ import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 
 let MAX_RETRIES = 3;
 
-export default class APIUtils {
+class APIUtils {
 
     // Utility function to make HTTP requests
-    public static async sendRequest(
-        base: string,
-        method: string,
-        endpoint: string,
-        data: any = {},
-        headers: Record<string, string> = {},  // Add headers as an optional parameter
-        queryParams: Record<string, string> = {} // Add query parameters as an optional parameter
-    ): Promise<AxiosResponse> {
+    static async sendRequest(
+        base,
+        method,
+        endpoint,
+        data = {},
+        headers = {},  // Add headers as an optional parameter
+        queryParams = {} // Add query parameters as an optional parameter
+    ) {
         const url = `${base}${endpoint}`;
         console.log('Request URL:', url);
 
 
         // Prepare the axios configuration
-        const config: AxiosRequestConfig = {
+        const config = {
             method,          // HTTP method (e.g., 'POST', 'GET', etc.)
             url,             // Full URL (base + endpoint)
             data,            // Request body (for POST, PUT, etc.)
@@ -46,7 +46,7 @@ export default class APIUtils {
 
     };
 }
-
+module.exports = APIUtils;
 // Example usage:
 // const baseUrl = 'https://api.example.com';
 // const response = await APIUtils.sendRequest(baseUrl, "post", "/login", { username: "testuser", password: "testpassword" }, {}, {});

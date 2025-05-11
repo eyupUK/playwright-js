@@ -1,18 +1,19 @@
-import { Page } from "@playwright/test";
 import PlaywrightWrapper from "../helpers/PlaywrightWrapper";
 
 export default class NewLinksPage {
 
-  private base: PlaywrightWrapper;
-
-  constructor(private page: Page) {
+  base;
+  page;
+  constructor( page ) {
     this.base = new PlaywrightWrapper(page);
+    this.page = page;
   }
 
-
-  private Elements = {
-    moreLink: this.page.locator('a.morelink'),
-    creationDates: this.page.locator('span.subline > span.age').all(),
+  get Elements() {
+    return {
+      moreLink: this.page.locator('a.morelink'),
+      creationDates: this.page.locator('span.subline > span.age').all(),
+    };
   }
 
 
@@ -28,9 +29,9 @@ export default class NewLinksPage {
    * @returns A promise that resolves to an array of numeric timestamps representing
    *          the creation dates of the articles.
    */
-  async fetchDatesOfTheFirstNumberOfArticles(rankings: number) {
+  async fetchDatesOfTheFirstNumberOfArticles(rankings) {
     const creationDates = await this.Elements.creationDates;
-    let datesTimes: number[] = [];
+    let datesTimes = [];
     datesTimes = await this.getCreationDatesAsNumbers(creationDates, datesTimes, rankings);
     while (datesTimes.length < rankings) {
       await this.Elements.moreLink.click();
@@ -50,7 +51,7 @@ export default class NewLinksPage {
    * @param rankings - The maximum number of dates to process.
    * @returns The updated `datesTimes` array containing the parsed numeric date values.
    */
-  async getCreationDatesAsNumbers(creationDates: any[], datesTimes: number[], rankings: number) {
+  async getCreationDatesAsNumbers(creationDates, datesTimes, rankings) {
     for (const date of creationDates) {
       if (datesTimes.length === rankings) {
         break;
@@ -70,7 +71,7 @@ export default class NewLinksPage {
    * @param datesArray - An array of dates represented as numbers (e.g., timestamps).
    * @returns `true` if the dates are sorted in descending order, otherwise `false`.
    */
-  areDatesSortedDescending(datesArray: number[]): boolean {
+  areDatesSortedDescending(datesArray) {
     for (let i = 0; i < datesArray.length - 1; i++) {
       if (datesArray[i] < datesArray[i + 1]) {
         return false;

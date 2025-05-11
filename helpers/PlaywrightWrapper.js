@@ -1,15 +1,17 @@
 import { Locator, Page } from "@playwright/test";
 
-export default class PlaywrightWrapper {
-  constructor(private page: Page) { }
+class PlaywrightWrapper {
+  constructor(page) {
+    this.page = page;
+   }
 
-  async goto(url: string) {
+  async goto(url) {
     await this.page.goto(url, {
       waitUntil: "domcontentloaded"
     });
   }
 
-  async waitAndClickOnElementByOtherLocator(locator: string) {
+  async waitAndClickOnElementByOtherLocator(locator) {
     const element = this.page.locator(locator);
     await element.waitFor({
       state: "visible",
@@ -18,7 +20,7 @@ export default class PlaywrightWrapper {
     await element.click();
   }
 
-  async waitAndClickOnElementByLocatorAPI(locator: Locator) {
+  async waitAndClickOnElementByLocatorAPI(locator) {
     const element = locator;
     await element.waitFor({
       state: "visible",
@@ -27,11 +29,11 @@ export default class PlaywrightWrapper {
     await element.click();
   }
 
-  async navigateTo(link: string) {
+  async navigateTo(link) {
     await Promise.all([this.page.waitForURL(link), this.page.click(link)]);
   }
 
-  async fillText(locator: string, text: string) {
+  async fillText(locator, text) {
     const element = this.page.locator(locator);
     await element.waitFor({
       state: "visible",
@@ -40,7 +42,7 @@ export default class PlaywrightWrapper {
     await element.fill(text);
   }
 
-  async fillTextByLocator(locator: Locator, text: string) {
+  async fillTextByLocator(locator, text) {
     const element = locator;
     await element.waitFor({
       state: "visible",
@@ -55,8 +57,10 @@ export default class PlaywrightWrapper {
     await this.page.waitForLoadState("networkidle");
   };
 
-  async isElementVisible(locator: string) {
+  async isElementVisible(locator) {
     return await this.page.locator(locator).first().isVisible();
   }
 
 }
+
+module.exports = PlaywrightWrapper;

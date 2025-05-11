@@ -1,16 +1,11 @@
 import { test as base } from "@playwright/test";
-import { Logger } from "winston";
 import { options } from "./helpers/logger";
 
 
-type Fixtures = {
-  // set types of your fixtures
-  logger: Logger;
-  userToken: string;
-};
+let logger;
 
 
-export const test = base.extend<Fixtures>({
+export const test = base.extend({
   logger:
     async ({ }, use) => {
       // Initialize your logger here
