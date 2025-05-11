@@ -1,5 +1,5 @@
-import * as fs from 'node:fs';
-import path from 'path';
+const fs = require('fs');
+const path = require('path');
 
 const directoriesToClean = [
   './test-results',
