@@ -211,3 +211,4 @@ dotenv: For managing environment variables.
 cross-env: For handling cross-platform issues, like folder path confusions of windows and linux/mac 
 
 axios: For API calls
+# playwright-js
