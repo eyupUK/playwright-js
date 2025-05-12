@@ -57,7 +57,9 @@ test.describe('HackerNews Page Tests', () => {
   test('Task 1: Verify the first 100 articles are sorted by the descendant date and time', async ({ page, logger }) => {
     logger.info('Extracting dates and times of the first 100 articles');
     
-    // title attribute contains the date and time in the format "2025-05-07T09:41:13 1746610873" and we need to extract the Unix timestamp, representing the number of seconds since January 1, 1970
+    // Each age element of articles has a "title" attribute containing a value of the date and time in the format 
+    // "2025-05-07T09:41:13 1746610873" and we need to extract the Unix timestamp, 
+    // representing the number of seconds since January 1, 1970
     let datesTimes = [];
     try {
       datesTimes = await newLinksPage.fetchDatesOfTheFirstNumberOfArticles(100);
