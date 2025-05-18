@@ -61,6 +61,20 @@ class PlaywrightWrapper {
     return await this.page.locator(locator).first().isVisible();
   }
 
+  async login(email, password) {
+    await this.page.locator('[data-test-id="SignInEmail"]').fill(email);
+    await this.page.locator('[data-test-id="SignInPassword"]').fill(password);
+    const loginBtn = await this.page.getByRole('button', { name: 'Log in with email' });
+    await this.waitAndClickOnElementByLocatorAPI(loginBtn);
+  }
+  async logout() {
+    await this.waitAndClickOnElementByOtherLocator("div[class^='Navbar__IconContainer']");
+    const LogOutBtn = await this.page.getByText('Log out');
+    await this.waitAndClickOnElementByLocatorAPI(LogOutBtn);
+  }
+
+
+
 }
 
 module.exports = PlaywrightWrapper;

@@ -1,7 +1,6 @@
 import NewLinksPage from '../pages/newLinksPage.page';
 import LoginPage from '../pages/loginPage.page';
 import BasePage from '../pages/basePage.page';
-import PlaywrightWrapper from "../helpers/PlaywrightWrapper";
 import { expect, test } from '../fixture';
 import APIUtils from '../helpers/apiUtils';
 
@@ -9,13 +8,11 @@ import APIUtils from '../helpers/apiUtils';
 let newLinksPage;
 let loginPage;
 let basePage;
-let base;
 
 test.describe('HackerNews Page Tests', () => {
 
   // setup 
-  test.beforeEach(async ({ page, logger }, testInfo) => {
-    base = new PlaywrightWrapper(page);
+  test.beforeEach(async ({ page, utils, logger }, testInfo) => {
     logger.info(`🚀 🚀 🚀 ${testInfo.title} 🚀 🚀 🚀 TEST STARTED 🚀 🚀 🚀`);
     const baseUrl = process.env.BASE_URL;
     if (!baseUrl) {
@@ -27,7 +24,7 @@ test.describe('HackerNews Page Tests', () => {
       logger.info(`🚀 Navigated to ${baseUrl} by playwright.config.js`);
     } catch (error) {
       logger.error('Error of navigating to the page:', error);
-      await base.navigateTo(baseUrl + '/newest');
+      await utils.navigateTo(baseUrl + '/newest');
       logger.info(`🚀 Navigated to ${baseUrl} by .env`);
     }
 
