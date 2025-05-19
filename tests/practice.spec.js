@@ -71,7 +71,7 @@ test.describe('Invalid login cases with DDT', () => {
             await expect(page.getByRole('button', { name: 'Log in' })).toBeVisible();
             await expect(page.getByRole('button', { name: 'Log in with email' })).toBeVisible();
             await expect(page).toHaveURL(/\/login$/);
-            await expect(page.getByText('New file')).toBeHidden();
+            await expect(page.getByText('New file')).not.toBeVisible();;
             await page.reload();
         }
     });
@@ -257,22 +257,21 @@ test.describe('Dolittle Page Tests', () => {
         const fileName = 'test' + Date.now();
         console.log('File name:', fileName);
 
-        // prevents flakiness 
-        await expect(async () => {
-            // Click on New file button
-            await page.getByText('New file').click();
+        // Wait for the New file button to be visible
+        await page.waitForSelector("div[class^='pages__NewFileButton']");
+        // Click on New file button
+        await page.getByText('New file', { exact: true }).click();
 
-            // Wait for the file name input to be visible and fill it
-            await page.waitForSelector("div[class^='styled__FileTitleInputContainer']");
+        // Wait for the file name input to be visible and fill it
+        await page.waitForSelector("div[class^='styled__FileTitleInputContainer']");
 
-            // Click on the file name input and fill the unique file name
-            await page.locator("div[class^='styled__FileTitleInputContainer']").click();
-            await page.locator("div[class^='styled__FileTitleInputContainer']").getByRole('textbox').clear();
-            await page.locator("div[class^='styled__FileTitleInputContainer']").getByRole('textbox').fill(fileName);
+        // Click on the file name input and fill the unique file name
+        await page.locator("div[class^='styled__FileTitleInputContainer']").click();
+        await page.locator("div[class^='styled__FileTitleInputContainer']").getByRole('textbox').waitFor({ state: 'visible' });
+        await page.locator("div[class^='styled__FileTitleInputContainer']").getByRole('textbox').fill(fileName);
 
-            // Click on Logo to go to home page
-            await page.getByRole('link').filter({ hasText: /^$/ }).click();
-        }).toPass({ timeout: 60000 });
+        // Click on Logo to go to home page
+        await page.getByRole('link').filter({ hasText: /^$/ }).click();
 
 
         // Assert that the file in the list is created
@@ -285,6 +284,9 @@ test.describe('Dolittle Page Tests', () => {
         // Assert that the file is created
         await expect(page.getByText(fileName)).toBeVisible();
         expect(await page.getByText(fileName).count()).toBe(1);
+
+        // Wait for the New file button to be visible
+        await page.waitForSelector("div[class^='pages__NewFileButton']");
 
         // Click on 3 dots and confirm deleting the file
         await page.locator("div[class^='styled__TableRowContainer']").getByRole('button').click();
@@ -325,36 +327,35 @@ test.describe('Dolittle Page Tests', () => {
             .locator("div[class*='styled__FileName']")
             .allInnerTexts();    // => Promise<string[]>
 
-
-        // 2️⃣ build a sorted‐descending copy
-        const sortedDesc = [...fileNames].sort((a, b) =>
-            // for plain alphabetic (Z→A); or tweak for numeric parts
+        // build a sorted‐ascending copy
+        const sortedAsc = [...fileNames].sort((a, b) =>
+            // for plain alphabetic (A→Z); or tweak for numeric parts
             a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' })
         );
         await page.waitForTimeout(1000);
 
-        // 3️⃣ assert that the UI is already in descending order
-        expect(fileNames).toEqual(sortedDesc);
+        // assert that the UI is already in descending order
+        expect(fileNames).toEqual(sortedAsc);
 
-        // Now click again to flip to ascending (A→Z)
+        // Now click again to flip to descending (A→Z)
         await fileNameBtn.click();
 
         await page.waitForTimeout(1000);
 
         // Grab the UI file names as strings like "test1", "test2", etc.
-        const fileNamesAsc = await page
+        const fileNamesDesc = await page
             .locator("div[class*='styled__FileName']")
             .allInnerTexts();    // => Promise<string[]>
 
-        // 2️⃣ build a sorted‐ascending copy
-        const sortedAsc = [...fileNamesAsc].sort((a, b) =>
-            // for plain alphabetic (A→Z); or tweak for numeric parts
+        // build a sorted‐descending copy
+        const sortedDesc = [...fileNamesDesc].sort((a, b) =>
+            // for plain alphabetic (Z→A); or tweak for numeric parts
             b.localeCompare(a, undefined, { numeric: true, sensitivity: 'base' })
         );
         await page.waitForTimeout(1000);
 
-        // 3️⃣ assert that the UI is already in ascending order
-        expect(fileNamesAsc).toEqual(sortedAsc);
+        // 3️⃣ assert that the UI is already in descending order
+        expect(fileNamesDesc).toEqual(sortedDesc);
 
     });
 
@@ -402,9 +403,79 @@ test.describe('Dolittle Page Tests', () => {
         // Assert UI is already newest-first
         expect(datesDesc).toEqual(sortedDesc);
     });
-    // test('Test 4: Add and delete text component', async ({ page, utils, logger }) => {
+    test('Test 4: Add and delete text component', async ({ page, utils, logger }) => {
+        // set default timeout to 120 seconds
+        page.setDefaultTimeout(120000);
 
-    // });
+        const email = process.env.USER_NAME;
+        const password = process.env.PASSWORD;
+        if (!email || !password) {
+            logger.error('EMAIL or PASSWORD is not defined in the environment variables');
+            throw new Error('EMAIL or PASSWORD is not defined in the environment variables');
+        }
+        await utils.login(email, password);
+
+        // Wait for the New file button to be visible
+        await page.waitForSelector("div[class^='pages__NewFileButton']");
+        // Click on New file button
+        await page.getByText('New file', { exact: true }).waitFor({ state: 'visible' })
+        await page.getByText('New file', { exact: true }).click();
+
+        // click on DASHBOARD
+        await page.locator('div:nth-child(5) > svg').first().waitFor({ state: 'visible' });
+        await page.locator('div:nth-child(5) > svg').first().click();
+        await page.waitForTimeout(1000);
+        await expect(page.getByText('This dashboard is empty')).toBeVisible();
+
+        await page.getByText('Add component').click();
+
+        await page.locator("article[class^='Grid__GridContainer']").waitFor({ state: 'visible', timeout: 30000 });
+        await page.locator('#Text').waitFor({ state: 'visible' });
+
+        // Drag and drop the text component to the dashboard
+        await page.locator('#Text').hover();
+        await page.mouse.down({button: 'left'});
+        await page.locator("article[class^='Grid__GridContainer']").hover();
+        // await page.locator("div[class^='DashboardUI__GridOuterContainer']").waitFor({ state: 'visible' });
+        // await page.locator("div[class^='DashboardUI__GridOuterContainer']").hover();
+        // await page.locator("section[class='ax cb cg ay az b0 b1 aq b2 b3 ao b4 b5 b6 b7 b8 at']").hover();
+        await page.locator("section[class]").waitFor({ state: 'visible' });
+        await page.locator("section[class]").hover();
+        // await page.mouse.up({button: 'left'});
+
+
+        // 2️⃣ Wait for the Components sidebar and canvas to be ready
+        // await page.locator('#Text').waitFor({ state: 'visible' });
+        // await page.locator('article[class*="Grid_GridContainer"]').waitFor({ state: 'visible' });
+        // const textCard = await page.locator('#Text');
+        // const canvas = await page.locator('article[class*="Grid_GridContainer"]');
+
+
+        // 3️⃣ Drag & drop
+        // await page.dragAndDrop(
+        //     // source: the Text component in the sidebar
+        //     textCard,
+        //     // target: the empty grid container on the canvas
+        //     canvas,
+        //     { force: true }
+        // );
+
+        //await expect(page.locator("div[class^='GridBlock__ComponentName']")).toBeVisible();
+        // await expect(page.locator('section[draggable=true]')).toBeVisible();
+        await expect(page.getByText('This dashboard is empty')).not.toBeVisible();
+
+
+        // await page.getByRole('article').getByRole('button').click();
+        // await page.getByRole('menu').getByText('Delete').click();
+        const threeDot = await page.locator("button[class^='DashboardComponentMoreOptions__MenuButton']");
+        await threeDot.click();
+        await page.locator("div[class^='DashboardComponentMoreOptions__MenuItemWrapper']", { hasText: 'Delete' }).click();
+
+        await expect(page.getByText('This dashboard is empty')).toBeVisible();
+        await expect(page.locator("div[class^='GridBlock__ComponentName']")).not.toBeVisible();
+        await expect(page.locator('section[draggable=true]')).not.toBeVisible();
+
+    });
 
     // test('Test 5: Search files', async ({ page, utils, logger }) => {
 
