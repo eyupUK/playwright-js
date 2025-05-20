@@ -61,6 +61,7 @@ const invalidLogins = [
     },
 ];
 async function login(page, username, password) {
+    await page.locator('[data-test-id="SignInEmail"]').waitFor({ state: 'visible' });
     await page.locator('[data-test-id="SignInEmail"]').fill(username);
     await page.locator('[data-test-id="SignInPassword"]').fill(password);
     await page.getByRole('button', { name: 'Log in with email' }).click();

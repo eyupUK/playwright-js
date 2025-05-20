@@ -23,18 +23,19 @@ test.describe('Create and delete file', () => {
         }
         await login(page, email, password);
 
-
-        // Create a unique file name
-        const fileName = 'test' + Date.now();
-        console.log('File name:', fileName);
-
         // Wait for the New file button to be visible
         await page.waitForSelector("div[class^='pages__NewFileButton']");
+
         // Click on New file button
+        await page.getByText('New file', { exact: true }).waitFor({ state: 'visible', timeout: 5000 });
         await page.getByText('New file', { exact: true }).click();
 
         // Wait for the file name input to be visible and fill it
         await page.waitForSelector("div[class^='styled__FileTitleInputContainer']");
+
+        // Create a unique file name
+        const fileName = 'test' + Date.now();
+        console.log('File name:', fileName);
 
         // Click on the file name input and fill the unique file name
         await page.locator("div[class^='styled__FileTitleInputContainer']").click();
@@ -44,6 +45,8 @@ test.describe('Create and delete file', () => {
         // Click on Logo to go to home page
         await page.getByRole('link').filter({ hasText: /^$/ }).click();
 
+        // Wait for the New file button to be visible
+        await page.waitForSelector("div[class^='pages__NewFileButton']");
 
         // Assert that the file in the list is created
         await expect(page.getByText(fileName)).toBeVisible();
@@ -71,7 +74,7 @@ test.describe('Create and delete file', () => {
         // Assert that the file is deleted
         await expect(page.getByText('No files')).toBeVisible();
 
-        // Unfilter
+        // Unfilter files
         await page.getByRole('textbox', { name: 'Search files' }).clear();
 
         // Assert that the file in the list is deleted
