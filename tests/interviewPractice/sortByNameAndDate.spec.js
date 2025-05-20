@@ -33,8 +33,6 @@ test.describe('Sort by Name and Date in Descending Order', () => {
             .locator("div[class*='styled__FileName']")
             .allInnerTexts();    // => Promise<string[]>
 
-        console.log("fileNamesDesc:", fileNamesDesc);
-
         // build a sorted‐descending copy
         const sortedNamesDesc = [...fileNamesDesc].sort((a, b) =>
             // for plain alphabetic (Z→A); or tweak for numeric parts
@@ -45,7 +43,7 @@ test.describe('Sort by Name and Date in Descending Order', () => {
         // 3️⃣ assert that the UI is already in descending order
         expect(fileNamesDesc).toEqual(sortedNamesDesc);
 
-        //===================Sort by Date=========================
+        //===================Sort by Last Update=========================
 
         // Now click on row header to sort by descending (newest first)
         await page.getByText('Last updated').dblclick();
