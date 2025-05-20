@@ -18,8 +18,8 @@ jobs:
         node-version: 22
     - name: Install dependencies
       run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
+    - name: Install Playwright Chromium
+      run: npx playwright install --with-deps chromium
       # Runs on display while headless=false
     - name: Install Xvfb 
       run: |
