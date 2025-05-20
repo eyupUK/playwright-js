@@ -7,8 +7,8 @@ async function login(page, username, password) {
     await page.getByRole('button', { name: 'Log in with email' }).click();
 }
 
-test.describe('Sort by Name and Date in Descending Order', () => {
-    test('Test 2: Sort by Name and Date in Descending Order', async ({ page, utils, logger }) => {
+test.describe('Drag and drop text component', () => {
+    test('Test 1: Drag and drop text component', async ({ page, utils, logger }) => {
         // set default timeout to 120 seconds
         page.setDefaultTimeout(120000);
 
@@ -44,7 +44,7 @@ test.describe('Sort by Name and Date in Descending Order', () => {
         await page.locator('div:nth-child(5) > svg').first().click();
 
         // confirm that the dashboard is empty
-        await expect(page.getByText('This dashboard is empty')).toBeVisible();
+        await page.getByText('This dashboard is empty').waitFor({ state: 'visible', timeout: 5000 });
 
         // click on the Add component button
         await page.getByText('Add component').click();
@@ -67,6 +67,8 @@ test.describe('Sort by Name and Date in Descending Order', () => {
         // assert that the component is added
         await expect(page.locator("div[class^='GridBlock__ComponentName']")).toBeVisible();
         await expect(page.locator('section[draggable=true]')).toBeVisible();
+        await expect(page.locator("div[class^='GridBlock__ComponentName']")).toHaveText('Text1');
+        await expect(page.locator("div[class^='styled__TextBlockContainer']")).toHaveText('Hello world');
         await expect(page.getByText('This dashboard is empty')).not.toBeVisible();
 
 
@@ -77,6 +79,7 @@ test.describe('Sort by Name and Date in Descending Order', () => {
         await page.locator("button[class^='DashboardComponentMoreOptions__MenuButton']").click();
 
         // click on the delete button
+        await page.locator("div[class^='DashboardComponentMoreOptions__MenuItemWrapper']", { hasText: 'Delete' }).waitFor({ state: 'visible', timeout: 5000 });
         await page.locator("div[class^='DashboardComponentMoreOptions__MenuItemWrapper']", { hasText: 'Delete' }).click();
 
         // assert that the component is deleted

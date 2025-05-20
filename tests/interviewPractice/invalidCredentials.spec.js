@@ -66,7 +66,7 @@ async function login(page, username, password) {
     await page.getByRole('button', { name: 'Log in with email' }).click();
 }
 test.describe('Invalid login cases with DDT', () => {
-    test("Test: Invalid credentials", async ({ page, utils }) => {
+    test("Test 3: Invalid credentials", async ({ page, utils }) => {
         await utils.goto(baseUrl + '/login');
         for (const { name, email, password, errorText } of invalidLogins) {
             console.log(`Testing: ${name} with email: ${email} and password: ${password}`);

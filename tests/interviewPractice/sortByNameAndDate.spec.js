@@ -7,7 +7,7 @@ async function login(page, username, password) {
     await page.getByRole('button', { name: 'Log in with email' }).click();
 }
 test.describe('Sort by Name and Date in Descending Order', () => {
-    test('Test 2: Sort by Name and Date in Descending Order', async ({ page, utils, logger }) => {
+    test('Test 5: Sort by Name and Date in Descending Order', async ({ page, utils, logger }) => {
         // set default timeout to 120 seconds
         page.setDefaultTimeout(120000);
 
