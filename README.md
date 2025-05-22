@@ -125,6 +125,11 @@ or
    npm run clean
 ```
 
+### 7. For code generator/ playwright inspector
+```bash
+   npx playwright codegen <url>
+   ```
+
 ### 🧠 Notes
 
 #### Ensure allure-commandline is installed globally if you plan to use Allure frequently
